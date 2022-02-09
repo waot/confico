@@ -40,6 +40,10 @@ seat * hide_cursor when-typing enable
 #seat seat0 xcursor_theme Bibata_Spirit 40
 seat * xcursor_theme Bibata_Spirit 40
 
+
+### Drink spirits for better bubu ###
+
+
 #output * subpixel rgb
 
 $unbindsym $mod+Return
