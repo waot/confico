@@ -1,0 +1,9 @@
+{
+	"amounts": {
+		"serverElementHeight": "40",
+		"serverListWidth": "40"
+	},
+	"general": {
+		"showGuildIcon": true
+	}
+}

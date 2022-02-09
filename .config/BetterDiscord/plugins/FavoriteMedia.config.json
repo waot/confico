@@ -1,0 +1,36 @@
+{
+    "currentVersionInfo": {
+        "version": "1.5.5",
+        "hasShownChangelog": true
+    },
+    "settings": {
+        "hideUnsortedMedias": true,
+        "hideThumbnail": false,
+        "showContextMenuFavorite": true,
+        "forceShowFavoritesGIFs": false,
+        "mediaVolume": 10,
+        "btnsPosition": "left",
+        "image": {
+            "enabled": true,
+            "showBtn": true
+        },
+        "video": {
+            "enabled": true,
+            "showBtn": true
+        },
+        "audio": {
+            "enabled": true,
+            "showBtn": true
+        }
+    },
+    "image": {
+        "categories": [
+            {
+                "id": 1,
+                "name": "j",
+                "color": "#202225"
+            }
+        ],
+        "medias": []
+    }
+}

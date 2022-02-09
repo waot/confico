@@ -1,0 +1,28 @@
+{
+    "label" : "logout",
+    "action" : "loginctl terminate-user $USER",
+    "text" : "LOG",
+    "keybind" : "e",
+    "height" : "0"
+}
+{
+    "label" : "shutdown",
+    "action" : "systemctl poweroff",
+    "text" : "OFF",
+    "keybind" : "s",
+    "height" : "0"
+}
+{
+    "label" : "suspend",
+    "action" : "systemctl suspend",
+    "text" : "SLEEP",
+    "keybind" : "u",
+    "height" : "0"
+}
+{
+    "label" : "bios",
+    "action" : "systemctl reboot --firmware-setup",
+    "text" : "UEFI",
+    "keybind" : "b",
+    "height" : "0"
+}

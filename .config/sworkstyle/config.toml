@@ -1,0 +1,214 @@
+
+# pattern: Can either be the exact "app_name" (app_id/class) of the window or a regex string in the format of `"/{regex}/"` which will match the window "title".
+# icon: Your beatiful icon
+#
+# verbose format:
+#
+# '{pattern}' = { type = 'generic' | 'exact', value = '{icon}' }
+#
+# If it couldn't match something it will print:
+#
+# WARN [sworkstyle:config] No match for '{app_name}' with title '{title}'
+#
+# You can use {title} to do a generic matching
+# You can use {app_name} to do an exact match
+# You can find icons for nerd fonts here: https://www.nerdfonts.com/cheat-sheet
+# Anything added in here will override the defaults in the package.
+
+[matching]
+
+'discord' 	= ''
+#'foot' = '' 
+'/foot/' = ''
+'^~' = ''
+'cmatrix' = 'ﬧ'
+'/^~$/' = ''
+#'/NVIM ?\w*/' 	= '' 
+#'nano'	 	= ''
+'/NVIM/' 	= ''
+#'/~/'	 	= ''
+'mpv' 		= ''
+'VSCodium' 	= ''
+'deluge' 	= ''
+'transmission-gtk'=''
+'pamac-manager' = ''
+'/Pinta/' 	= ''
+'Joplin' 	= '' 
+'/GitHub/' 	= ''
+'/annuel/' 	= ''
+'pcmanfm' 	= ''
+'/docker/' 	= ''
+'/reddit/' 	= ''
+'/LibreOffice/' = ''
+'com.github.johnfactotum.Foliate' = ''
+'com.github.geigi.cozy' = ''
+'Feeds' 	= ''
+'parsecd' 	= '調'
+'/KDE/' 	= ''
+'ventoy' 	= ''
+'Zathura' 	= ''
+'imv'		= '串'
+'/Pocket Casts/'= ''
+'/Tor/' 	= '﨩'
+#'Element' 	= 'ﬧ'
+'Element' 	= ''
+'/Wikipedia/' 	= '磌'
+'/XDA/'		= '請'
+'/YouTube/'	= ''
+'/arch/'	= ''
+'/AUR/'		= ''
+'stacer'        = ''
+#'WeekToDo'	= ''
+'WeekToDo' 	= ''
+'/collapse/'    = ''
+'/Collapse/'    = ''
+'google-chrome-unstable' = ''
+
+# 
+# 
+# 屢
+# 
+# 遲
+# 藍
+# 串
+# 冷
+# 
+# ﰢ
+# 屢
+# 
+# 
+# 
+# 
+#  soundcloud
+#  star-rating
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 縉
+# 
+# 
+# ﳢ
+
+#  
+# 
+# 
+# 
+# 
+# 
+# 
+# ﲫﲦﲧﲨﲩ
+#  Hackernews ﬣ 
+# 
+# 磊
+# 
+# 
+# 
+# 
+# 
+#  paint
+# ﬅ
+# 蠟
+# 擄
+# 蓼
+# ﲂ
+# 戮
+# ﳰ
+# ﳮ = audio indicator
+# 刺teamviewer
+# 輻
+# ﭧ
+# 兀parsec
+# ﰥ屮 ﲆ
+# ﰨ
+# 搜
+# ﭲ
+# 請
+
+
+# ﳘ
+# 
+# 
+# 
+# 
+# 
+# ﳇ loods
+#  pomp
+# צּ lpg
+
+# ﱬ
+# 
+# ﱦ
+#  mail
+# 
+
+# ﰌ
+# ﭷ
+# ﲫ
+# יּ
+# 
+# 
+# ﲲ
+# 
+# 
+# 
+# 
+
+# 鷺
+# ﴱ
+# 懲
+# 瑱
+
+# ﳟ
+#  laptop
+#  pc
+# 
+# 
+# 
+# 
+# 
+#  annuel
+# ﰩ
+# 
+# 
+# 
+
+
+# 
+# 
+# 
+# 
+# 
+# 
+
+
+# 
+# 
+#   
+# 
+# 
+# 
+# 
+# ﯟ
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 

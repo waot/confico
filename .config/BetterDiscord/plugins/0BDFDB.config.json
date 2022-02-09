@@ -1,0 +1,22 @@
+{
+	"changeLogs": {
+		"CompleteTimestamps": "1.6.0",
+		"HideMutedCategories": "1.0.6",
+		"RemoveNicknames": "1.4.0",
+		"SplitLargeMessages": "1.7.0",
+		"ThemeSettings": "1.3.3",
+		"Translator": "2.3.2"
+	},
+	"choices": {
+		"toastPosition": "center"
+	},
+	"general": {
+		"showSupportBadges": false,
+		"showToasts": false,
+		"useChromium": false
+	},
+	"hashes": {
+		"0BDFDB.data.json": "44a2b926583f7b663c65a3731ce166446233ae51",
+		"0BDFDB.raw.css": "a1036e10077b9457f3903795204f7dbd91d7646d"
+	}
+}

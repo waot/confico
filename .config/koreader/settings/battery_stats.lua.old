@@ -1,0 +1,27 @@
+-- we can read Lua syntax here!
+return {
+    ["awake"] = {
+        ["percentage"] = 0,
+        ["time"] = 0,
+    },
+    ["awake_state"] = {
+        ["percentage"] = 85,
+        ["timestamp"] = 1644324756,
+    },
+    ["charging"] = {
+        ["percentage"] = 0,
+        ["time"] = 0,
+    },
+    ["charging_state"] = {
+        ["percentage"] = 85,
+        ["timestamp"] = 1644324756,
+    },
+    ["discharging"] = {
+        ["percentage"] = 0,
+        ["time"] = 0,
+    },
+    ["sleeping"] = {
+        ["percentage"] = 0,
+        ["time"] = 0,
+    },
+}
