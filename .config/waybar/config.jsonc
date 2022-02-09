@@ -1,0 +1,211 @@
+{
+    "include": [
+        "/usr/share/sway/templates/waybar/config.jsonc"
+    ],
+    "layer": "top",
+//    "exclusive":false,
+//    "mode":"hide",
+//    "hidden_state":"show",
+    "bar-id":"bar-0",
+    "ipc": true,
+    "height":40,
+
+    "active-only": false,
+    "sort-by-coordinates": false,
+    "sort-by-name": false,
+
+//    "custom/dabsch":{"format":" £«» "},
+    "custom/dabsch":{"format":"OOOO"},
+    "custom/boe":{"format":"",
+    "rotate":180},
+    "custom/menu": {
+        "format": "£«»",
+        "on-click": "swaymsg exec \\$menu",
+        "tooltip": false
+    },
+    "keyboard-state": {
+        "numlock": true,
+	"capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""}},
+    "custom/playerctl": {
+        "format": "{icon}",
+	"format-icons": {
+            "Playing": "å",
+            "Paused": "ç"}},    
+    "custom/clipboard":{
+        "format": "©"},
+//    "clock":{
+//        "format":"{:%-I%M}"
+//	},
+     "battery": {
+        "format-full": "",
+	"states": {
+		"full":100,
+		"warning" :40,
+		"critical" :20
+	},
+//   "format-full-full": "Æ00"}, 
+//	"format-charged":"Æ00"},
+//	"format-100":"Æ00"},
+	"format-charging": "È{capacity}",
+	"format-plugged": "",
+	"format": "{icon}{capacity}",
+        "format-icons": ["Ë","Ç","À","Á","Â","Ã","Ä","Å","Æ"]},
+    "cpu": {"format": "¢ {usage}"},
+    "memory": {"format": "® {}"},
+    "custom/pacman": {"format":"Ì{}"},
+    "custom/github": {"format":"#{}"},	    
+    "network": {"format-wifi": ""},
+    "modules-left": [
+//	"custom/menu",
+	"sway/workspaces", 
+	"sway/workspaces#icons", 
+ 	"custom/scratchpad"],
+//     	"keyboard-state"],
+    "sway/hide": {
+        "hide-on-startup": true,
+//      "hide-to-bottom-layer": true
+    },
+    "sway/mode": {
+        "format": "{}",
+	"tooltip": false
+    },
+    "sway/window":{
+    "max-length": 200,
+    "rewrite": {    
+//      	"":"£«»",
+        "(.*) - Mozilla Firefox": "$1",
+	"(.*) - Discord": "$1",  
+	"(.*) LibreOffice": "$1",  
+       	"(.*) - NVIM": "$1"
+    },
+    "format":"{}",
+    "max-length":50},
+    "modules-center": [
+	"custom/wf-recorder",
+	"custom/wind",
+	"sway/mode"
+//	"custom/dabsch",
+
+//	"sway/workspaces#icons",
+//	"battery"
+        ],
+	//"sway/window"],
+        // "idle_inhibitor"],
+    "custom/weather": {"exec": "/usr/share/sway/scripts/weather.py Hazerswoude-Dorp", "format": "{icon}  {}  "},
+
+
+    "sway/workspaces": {"format": "{index}",   // "{name}",
+	"disable-markup":true,
+	"current-only":true
+    },
+    "sway/workspaces#icons": {"format": "{name}",   // "{name}",
+//	"disable-markup":true,
+	"current-only":true,
+	"format-icons": {
+			"1": "I",
+			"2": "II",
+			"3": "III",
+			"4": "IV",
+			"5": "V",
+			"6": "VI",
+			"7": "VII",
+			"8": "VIII",
+			"9": "IX",
+			"10": "X"
+	},
+	"persistent_workspaces": {"0:£«»":[]}
+//	"sort-by-coordinates":true,
+//			"persistent_workspaces": {"0":[]}
+    },
+    "modules-right": [
+        // informational
+//	"tray",
+//	"custom/remind",
+//      "custom/pacman",
+        "custom/github",
+//      "cpu",
+        "battery",
+//      "custom/clipboard",
+        "custom/playerctl",
+//	"custom/gpu",
+//	"custom/igpu",
+//      "memory",
+//      "temperature",
+
+        // connecting
+//        "network",
+        //"bluetooth",
+
+        // media
+//      "pulseaudio",
+//	"backlight",
+
+        // system
+//        "custom/pacman",
+// 	"custom/weather",
+//        "tray",
+//	"custom/dabsch",
+//	"clock",
+ 	"custom/sway",
+	"custom/date",
+	"custom/time"
+    ],
+    "pulseaudio":{"format":" {icon}{format_source} "},
+// bindsym $mod+o exec killall -SIGUSR1 waybar
+// "mode": "hide"
+
+    "temperature": {
+        "format": "{icon} {temperatureC}°"
+    },
+
+    "custom/remind": {
+    "format": "Rem: {}",
+    "tooltip": true,
+    "interval": 300,
+    "exec": "home/wout/Documents/waybar-remind.py",
+    "return-type": "json"
+    },
+
+    "custom/gpu": {
+    // "exec": "command -v radeontop >/dev/null 2>&1 && radeontop -d - -l 1 | tr -d '\n' | cut -s -d ',' -f3 | cut -s -d ' ' -f3 | tr -d '%' | awk '{ print $1 }' | tr -d '\n' || echo 'No radeontop'",
+    "exec": "radeontop -d - -l 1 | tr -d '\n' | cut -s -d ',' -f3 | cut -s -d ' ' -f3 | tr -d '%' | cut -s -d '.' -f1 |  awk '{ print $1 }' | tr -d '\n'",
+    "exec-if": "command -v radeontop",
+    "format": "§ {}",
+    "interval": 3,
+    "format-tooltip": "GPU Usage",
+    "on-click": "swaymsg exec \\$term_float radeontop"
+    },
+
+    "custom/wind":{
+	"interval": 300,
+	"exec":"./whoo.sh",
+	"return-type":"json",
+	"format":"{}"
+    },
+
+    "custom/time":{
+	"interval":60,
+	    "exec": "/bin/sh /home/wout/time.sh",
+	"format":"{}",
+	"tooltip":false
+    },
+    "custom/date":{
+	"interval":300,
+	"exec": "./date.sh",
+	"return-type": "json",
+	"format":"{}",
+	"on-click": "swaymsg exec \\$calendar"
+    },
+    "custom/igpu": {
+    "exec": "sudo intel_gpu_top -J | awk '/busy/ && !/0.000000/ {print substr($0,12,2)}'",
+    "format": " Ⅲ {}% ",
+    "interval": 3,
+    "format-tooltip": "GPU Usage"
+    },
+
+    "tray": {"show-passive-items": true}
+}

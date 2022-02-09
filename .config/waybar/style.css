@@ -1,0 +1,391 @@
+
+/* =============================================================================
+ *
+ * Waybar configuration
+ *
+ * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+ *
+ * =========================================================================== */
+
+/* import css definitions for current theme */
+
+
+
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+
+@keyframes blink-warning {
+    70% {
+        color: @wm_icon_bg;
+    }
+
+    to {
+        color: @wm_icon_bg;
+        background-color: @warning_color;
+    }
+}
+
+@keyframes blink-critical {
+    70% {
+      color: @wm_icon_bg;
+    }
+
+    to {
+        color: @wm_icon_bg;
+        background-color: @error_color;
+    }
+}
+
+
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+
+/* Reset all styles */
+* {
+    border: none;
+    border-radius: 0px;
+    min-height: 0px;
+    margin: 0px;
+    padding: 0px;
+    font-family: "53xy5w4y","FontAwesome";
+/*    letter-spacing: 4px;*/
+}    
+
+/* The whole bar */
+#waybar {
+    background: transparent; /*black; @theme_bg_color;*/
+    color: #808080; /*@wm_icon_bg;*/
+    font-size: 24px;
+}
+
+/* Each module */
+#custom-time,
+#custom-pacman,
+/*#custom-menu,*/
+#custom-help,
+#custom-scratchpad,
+#custom-github,
+#custom-clipboard,
+#custom-zeit,
+#bluetooth,
+#battery,
+#clock,
+#cpu,
+#memory,
+#mode,
+#network,
+#pulseaudio,
+#temperature,
+#idle_inhibitor,
+#backlight,
+#language,
+#custom-sunset {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: black;
+    letter-spacing: 4px;
+}
+
+
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+
+#custom-dabsch {
+    font-family: "wout";
+    letter-spacing: 4px;
+}
+
+#custom-sway {
+	font-size: 20;
+}
+
+/*#custom-boe {
+	margin-top: -10px;
+	font-size: 44;
+	margin-bottom: -8px;
+}*/
+
+tooltip {
+	padding: 0px;
+	border: 0px;
+	background-color: black /*transparent*/;
+	text-shadow: none;
+}
+
+tooltip label {
+/*    letter-spacing: 2px;*/
+    font-family: "95ix"; /*53xy*/
+    font-size: 24;
+    padding-left: 4px;
+    border: 0px;
+    color: #808080;
+}
+
+/*#custom-playerctl {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 2px;
+    padding-right: 20px;
+    min-width:40px;
+    background-color: black;
+}*/                      
+
+/*#mode {
+    background-color: black;
+}*/
+
+.modules-right {
+    padding-left: 0px;
+    background-color: black;
+}
+
+#window {
+/*    padding-left: 10px;
+    padding-right: 6px;*/
+    background-color: black;
+    color: #808080;
+}
+
+window#waybar.empty {
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: transparent;
+}
+
+#custom-playerctl {
+    border-top:0px;
+    border-top:0px;
+    border-top:0px;
+    min-width: 40px;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: black;
+/*    font-family: 95ix;*/
+}
+
+#tray {
+    padding-right: 10px;	
+    background-color: transparent;
+}
+
+#custom-scratchpad {  
+    background-color: black;
+    min-width: 40px;
+}
+
+#custom-zeit.tracking {
+    background-color: @warning_color;
+}
+
+#battery {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.full {
+    color: white;
+}
+
+#battery.warning {
+    color: @warning_color;
+}
+
+#battery.critical {
+    color: @error_color;
+}
+
+#battery.warning.discharging {
+    animation-name: blink-warning;
+    animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+#custom-wind {
+    min-width: 40px;
+    font-family: "53xy5w4y";
+/*    letter-spacing: 4px;*/
+}    
+
+#custom-date {
+    min-width: 40px;
+    font-family: "53xy5w4y";
+}    
+
+/*#custom-date {
+    padding-top: 4px;
+    min-width: 40px;
+    font-family: "wout";
+    font-size: 24;
+}*/    
+
+#custom-time {
+    background-color: #808080; /*@theme_selected_bg_color;*/
+    letter-spacing: 4px;
+    color: black; /* @wm_icon_bg;*/
+/*    border-top: 0px; solid transparent;*/
+/* To compensate for the top border and still have vertical centerin
+g */
+    border-top:0px;
+    min-width: 40px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+#cpu.warning {
+    color: @warning_color;
+}
+
+#cpu.critical {
+    color: @error_color;
+}
+
+#custom-menu {
+    background-color: #808080; /*@theme_selected_bg_color;*/
+    color: black; /*@wm_icon_bg;*/
+    padding-left: 6px;
+    padding-right: 6px;
+    letter-spacing: 0px;
+}
+
+#memory {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#memory.warning {
+    color: @warning_color;
+}
+
+#memory.critical {
+    color: @error_color;
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+#mode {
+    background: @background_color;
+}
+
+#network.disconnected {
+    color: @warning_color;
+}
+
+#pulseaudio.muted {
+    color: @warning_color;
+}
+
+#temperature.critical {
+    color: @error_color;
+}
+
+/*color: @theme_selected_bg_color;*/
+
+#workspaces button.hidden {
+    color: white;
+    min-width: 40px;
+}
+
+/*#workspaces button:nth-child(even) {
+    color: white;
+}*/
+
+#workspaces button {
+    border-top: 0px; /* solid transparent;*/
+    /* To compensate for the top border and still have vertical centerin
+g */
+    min-width:40px;    
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: #808080; /*@theme_selected_bg_color;*/
+    background-color: black;
+}
+
+/* 12 & 8 padding it was */
+/* {
+letter-spacing: -5px;
+}*/
+#workspaces button.persistant {
+    padding-left: 0px;
+}
+
+#workspaces button#sway-workspace1 {
+    padding-left: 0px;
+}
+
+#workspaces button.current_output {
+    padding-left: 0px;
+}
+
+/*window#waybar.empty #window {
+	padding-left: 40px;
+}*/
+
+#workspaces button.focused {
+    border-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    min-width: 40px;
+    border-color: @theme_selected_bg_color;
+    color: black; /*@wm_icon_bg;*/
+    background-color: #808080; /*@theme_selected_bg_color;*/
+    letter-spacing: 0px;
+}
+
+#workspaces.icons button {
+    border-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    min-width: 40px;
+    color: black; /*@wm_icon_bg;*/
+    background-color: #808080; /*@theme_selected_bg_color;*/
+    letter-spacing: 0px;
+}
+
+#workspaces.icons button.focused {
+    border-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    min-width: 40px;
+    color: #808080; /*@wm_icon_bg;*/
+    background-color: black; /*@theme_selected_bg_color;*/
+    letter-spacing: 0px;
+}
+
+#workspaces button.urgent {
+    border-color: @error_color;
+    color: @error_color;
+    min-width: 40px;
+}
+
+window#waybar.empty {
+    padding-right:0px;
+    padding-left:0px;
+}
+
+#custom-pacman {
+    color: @warning_color;
+}
+
+#bluetooth.disabled {
+    color: @warning_color;
+}
+
+#custom-wf-recorder {
+    color: @error_color;
+    padding-right: 10px;
+}
