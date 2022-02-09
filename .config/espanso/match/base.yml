@@ -1,0 +1,105 @@
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Print the output of a shell command
+  - trigger: ":time"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "./time.sh"
+
+  # GIFS
+  - trigger: ":yum"
+    replace: "https://media.giphy.com/media/3o7WTHbVK7BNBOPBnO/giphy.gif"
+  - trigger: ":fist"
+    replace: "https://tenor.com/view/fist-pump-happy-celebrate-dance-dancing-gif-4456499"
+  - trigger: ":jaaa"
+    replace: "https://tenor.com/view/anger-management-jack-nicholson-yes-duh-nods-gif-5222702"
+  - trigger: ":birb"
+    replace: "https://tenor.com/view/bird-parrot-papagallo-amitico-party-gif-8906272"
+  - trigger: ":aint"
+    replace: "https://tenor.com/view/honest-word-its-honest-work-it-aint-much-it-aint-much-but-its-honest-work-gif-13763573"
+  - trigger: ":exist"
+    replace: "https://tenor.com/view/cat-annoyed-gif-21260189"
+  - trigger: ":void"
+    replace: "https://tenor.com/view/black-hole-void-cat-paw-cute-gif-15447330"
+  - trigger: ":gib"
+    replace: "https://tenor.com/view/raccoon-give-it-to-me-gif-10300770"
+  - trigger: ":yip"
+    replace: "https://tenor.com/view/yipyip-gif-7547612"
+  - trigger: ":youths"
+    replace: "https://tenor.com/view/schmidt-newgirl-youths-gif-9713766"
+  - trigger: ":same"
+    replace: "https://tenor.com/view/same-gif-8650053"
+  - trigger: ":our"
+    replace: "https://tenor.com/view/meme-our-now-gif-21036569"
+  - trigger: ":dewit"
+    replace: "https://tenor.com/view/dewit-do-it-emperor-palpatine-star-wars-count-dooku-gif-15162627"
+  - trigger: ":look"
+    replace: "https://tenor.com/view/thats-it-yes-thats-it-that-right-there-omg-that-thats-what-i-mean-gif-17579879"
+  - trigger: ":dog"
+    replace: "https://tenor.com/view/vibing-st6-cute-dog-dance-gif-16459631"
+  - trigger: ":straw"
+    replace: "https://tenor.com/view/whatever-shrug-cat-cute-bye-gif-16444872"
+  - trigger: ":kick"
+    replace: "https://tenor.com/view/chuyfoxy-cat-kitten-angry-kitten-kicking-cat-gif-23206688"
+
+# Other sections
+
+  # E-mails
+  - trigger: "woutar"
+    replace: "woutarose@gmail.com"
+  - trigger: "wvan"
+    replace: "wvanstraalen@gmail.com"
+
+  # Dead keys
+  #  - trigger: "'e"
+  #  replace: "é"
+  #- trigger: "\"e"
+  #  replace: "ë"
+  #- trigger: "'E"
+  #  replace: "É"
+  #- trigger: "\"E"
+  #  replace: "Ë"
+
+  - trigger: "\"o"
+    replace: "ö"
+  - trigger: "\"u"
+    replace: "ü"
+  - trigger: "\"i"
+    replace: "ï"
+
+  - trigger: "\"O"
+    replace: "Ö"
+  - trigger: "\"U"
+    replace: "Ü"
+  - trigger: "\"I"
+    replace: "Ï"
+
+  # And much more! For more information, visit the docs: https://espanso.org/docs/
