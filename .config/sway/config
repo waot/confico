@@ -1,0 +1,262 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+# styles - set the folder for your theme definition file
+set $theme /usr/share/sway/themes/matcha-green
+
+# theme variables
+include $theme/definitions
+
+# global variables
+include /etc/sway/definitions
+
+# user variables
+include $HOME/.config/sway/definitions.d/*.conf 
+#Why is this so early
+
+include /etc/sway/inputs/*
+#include /etc/sway/outputs/*
+# to be replaced by the XKCD-module
+
+# enable modes
+include /etc/sway/modes/*
+# only enable this if every app you use is compatible with wayland
+#xwayland disable
+
+# include additional configs e.g. to autostart applications
+include /etc/sway/config.d/*
+
+# user config
+include $HOME/.config/sway/config.d/*.conf
+
+# hide cursor after 1920 ms
+seat * hide_cursor 1920
+seat * hide_cursor when-typing enable
+
+#seat seat0 xcursor_theme Hacked-aio-rightly 30
+#seat seat0 xcursor_theme Bibata_Spirit 40
+seat * xcursor_theme Bibata_Spirit 40
+
+#output * subpixel rgb
+
+$unbindsym $mod+Return
+$bindsym --no-repeat $mod+return exec $term_cwd 
+
+#$bindsym XF86AudioMute --locked exec $volume_mute
+#$bindsym XF86AudioRaiseVolume --locked exec $volume_up
+#$bindsym XF86AudioLowerVolume --locked exec $volume_down
+
+$bindsym XF86Display move workspace to up
+
+#$bindsym ctrl+Up move workspace to up
+#$bindsym ctrl+Down move workspace to down
+
+$unbindsym $mod+shift+q
+$bindsym $mod+shift+q kill, exec $(./empty.sh)
+
+set $onscreen_bar bash /usr/share/sway/scripts/wob.sh "#808080FF" "#000000FF"
+# Added FF for opacity
+
+##### this needs to be fixed for auto usage
+#for_window [app_id="scrcpy"] exec xremap .config/xremap/config.yml 
+
+#set $cursor-size 40
+
+#seat seat0 xcursor_theme "GoogleDot-Black"
+
+#bindsym $mod+space exec i3-focus-last menu
+exec swayrd
+
+focus_on_window_activation focus
+
+bindsym $mod+ctrl+l exec $(./empty.sh)
+
+$unbindsym $mod+a
+bindsym $mod+a exec /home/wout/todofi.sh -a
+bindsym $mod+shift+a exec /home/wout/todofi.sh
+
+$unbindsym $mod+d
+bindsym $mod+d exec fuzzel -f 53xy:pixelsize=36:align=center -P '     ' -I -x 1000 -y 1000 -p 0 -r 0 -b 000000ff -t 808080ff -s 808080ff -S 000000ff -m ffffffff -B -378 -C 000000ff -w 30 -l 3
+
+bindsym --locked ctrl+print exec grim
+
+set $nextempty bash /home/wout/nextempty.sh
+
+bindsym $mod+u workspace $nextempty
+
+# Solved it by setting the padding in foot terminal
+#for_window [title="fish"] border pixel 10
+#for_window [title="[^fish]"] border pixel 1
+#floating enable 
+
+#ROFI MENU
+#exec_always i3-focus-last server
+#bindsym shift+tab exec i3-focus-last
+#bindsym Menu exec i3-focus-last menu
+
+bindsym ctrl+tab exec swayr switch-to-urgent-or-lru-window
+bindsym --no-repeat $mod+grave exec swaymsg workspace $(./nextempty.sh)
+bindsym $mod+shift+grave exec swaymsg move to workspace $(./movenextempty.sh) && swaymsg workspace $(./follownextempty.sh) 
+# save value
+
+# workspace '/home/wout/nextempty.sh'
+
+bindsym $mod+y exec swaymsg workspace $(cat next))
+
+gaps inner 0
+gaps outer 0
+
+# Make a red border for this:
+
+for_window [shell="xwayland"] title_format "[X] %title"  
+#for_window [class="^.*"] border pixel 0
+
+bindsym --no-repeat $mod+z	exec swaymsg bar mode toggle
+
+for_window [app_id="pamac-manager"] floating disable
+for_window [app_id="xsensors"] floating disable
+for_window [app_id="pavucontrol"] floating enable
+
+#bindsym $mod+w exec firefox -- doesnt work with that key
+
+bindsym --locked shift+print exec --no-startup-id grim -g "$(slurp)" - | wl-copy -t image/png
+
+#Alt+F4, but with swapped bindings
+bindsym mod1+XF86Display kill
+bindsym $mod+ctrl+s mode $mode_shutdown
+
+bindsym --locked shift+XF86MonBrightnessDown exec light -S 1
+bindsym --locked shift+XF86MonBrightnessUp exec light -S 100
+
+# wouts 
+
+#exec weektodo workspace $ws10 
+
+# Inhibit idling - XWayland needs class over app_id
+for_window [class="parsecd"] inhibit_idle fullscreen
+for_window [class="discord"] inhibit_idle fullscreen
+
+#for_window [app_id="floating_shell"] floating enable, sticky enable
+#for_window [app_id="floating_shell_portrait"] floating enable, sticky enable
+
+#assign [app_id="firefox"] $ws1
+#for_window [app_id="firefox"] move to workspace $ws10, workspace $ws10
+#for_window [app_id="pcmanfm"] move to workspace $ws4, workspace $ws4
+
+#assign [app_id="pcmanfm"] $ws4
+#assign [app_id="mpv"] $ws8
+#assign [title="^Discord$"] $ws9
+
+#for_window [app_id="discord"] move to workspace $ws9, workspace $ws9
+#for_window [title="Element"] move to workspace $ws3, workspace $ws3
+#for_window [title="GIMP Startup"] move $ws6
+#for_window [class="Gimp"] move $ws6
+#for_window [app_id="pamac-manager"] move to workspace $ws10, workspace $ws10
+
+exec /home/wout/Pictures/XKCD/xkcd.sh
+output * bg /home/wout/Pictures/XKCD/output.png center #000000
+#center #000000 can also be replaced by fill
+
+#set $menu rofi -show drun -show-icons
+#bindsym $mod+d exec $menu
+
+input "type:keyboard" {
+xkb_layout us
+xkb_variant altgr-intl
+}
+
+exec sudo ydotoold
+# Unique buttons
+bindsym --whole-window --input-device=2:1:PS/2_Generic_Mouse BTN_RIGHT exec sudo ydotool key ctrl+w 
+#bindsym --whole-window --input-device=2:1:PS/2_Generic_Mouse BTN_RIGHT exec 'wtype -M ctrl KEY_W -m ctrl'
+bindsym --whole-window --input-device=2:1:PS/2_Generic_Mouse BTN_LEFT workspace back_and_forth
+
+bindsym Pause exec playerctl play-pause
+#bindsym Menu exec $menu
+#bindsym Break
+#UNUSED ABOVE
+
+bindsym --no-repeat Scroll_Lock exec wlogout -p layer-shell -T 400px -B 400px -L 820px -R 820px -c 40px -r 40px -b 2 
+
+# unbindsyms
+$unbindsym $mod+w
+$unbindsym $mod+s
+$unbindsym $mod+e
+#$unbindsym $mod+d
+
+bindsym $mod+tab workspace next
+bindsym $mod+shift+tab workspace prev
+bindsym mod1+tab exec "~/swit.sh next"
+bindsym mod1+shift+tab exec "~/swit.sh prev"
+#bindsym $mod+shift+d workspace "£«»"
+#bindsym $mod+s exec $menu
+
+# Sway-git interactions?
+#$unbindsym $mod+shift+
+$unbindsym $mod+shift+f
+
+bindsym $mod+x exec pamac-manager
+#bindsym $mod+shift+d exec 'discord --enable-features=UseOzonePlatform --ozone-platform=wayland'
+bindsym $mod+shift+e exec 'element-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland' 
+
+#bindsym $mod+c exec '"/opt/Pocket Casts/pocket-casts-linux" --ozone-platform-hint=auto %U
+
+bindsym $mod+c exec rofi -show calc -modi calc -no-show-match -no-sort
+bindsym $mod+shift+f exec firefox
+bindsym $mod+shift+z exec pcmanfm
+#bindsym $mod+shift+w exec weektodo
+
+#bindsym $mod+shift+return exec 'cd "$(swaycwd)" && st'
+
+#$unbindsym $mod+j
+bindsym $mod+j exec joplin-desktop
+
+font 73xy 20
+
+#font pango:monospace 0
+#titlebar_height 40
+#titlebar_color 808080
+titlebar_border_thickness 0
+#titlebar_padding 4
+title_align center
+
+#default_border normal 0
+default_border pixel 1 
+#1
+#default_border none
+smart_borders on
+#smart_gaps on
+
+hide_edge_borders --i3 both
+#smart_borders no_gaps
+default_floating_border none
+#exec_always autotiling
+
+#exec mako -c ~/.config/mako/config
+
+set $notifications dunst
+exec pkill mako
+exec dunst
+
+#chromecast
+exec cast_control service connect -n 'Groomkast'
+
+
+exec_always poweralertd -s -i "line power"
+
+exec_always gsettings set org.gnome.desktop.interface cursor-theme Bibata_Spirit
+exec_always gsettings set org.gnome.desktop.interface gtk-theme adwaita-dark-amoled-master
+exec_always {
+  gsettings set org.gnome.desktop.interface icon-theme Papirus-Grey
+}
+# Start at the square symbol
+exec swaymsg workspace 11111:
+
+exec_always keyd-application-mapper -d
+
+# exec swaymsg rename workspace to "11111: "
+# exec swaymsg rename workspace 11111 to 11111:    -- this would force it
+# exec swaymsg rename workspace "0: "   # Fix this
