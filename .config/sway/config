@@ -116,6 +116,8 @@ gaps outer 0
 
 # Make a red border for this:
 
+for_window [app_id="foot"] border csd
+
 for_window [shell="xwayland"] title_format "[X] %title"  
 #for_window [class="^.*"] border pixel 0
 

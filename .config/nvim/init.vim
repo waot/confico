@@ -50,7 +50,7 @@ hi Normal ctermbg=16 guibg=#000000
 hi clear Statusline
 hi StatusLine guibg=#000000
 hi EndOfBuffer ctermfg=16 guibg=#000000
-
+set noru
 
 "override_background(black)
  
