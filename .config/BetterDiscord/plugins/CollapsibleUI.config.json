@@ -1,9 +1,9 @@
 {
     "currentVersionInfo": {
-        "version": "4.1.2",
+        "version": "4.2.0",
         "hasShownChangelog": true
     },
-    "cuiSettingsVersion": "3",
+    "cuiSettingsVersion": "4",
     "disableTransitions": "false",
     "transitionSpeed": "0",
     "disableToolbarCollapse": "true",
@@ -14,12 +14,13 @@
     "settingsButtonsMaxWidth": "40",
     "toolbarIconMaxWidth": "200",
     "membersListMaxWidth": "200",
-    "userAreaMaxHeight": "100",
     "msgBarMaxHeight": "400",
     "windowBarHeight": "18",
     "cui.serverListButtonActive": "false",
     "cui.channelListButtonActive": "false",
     "cui.userAreaButtonActive": "true",
     "cui.msgBarButtonActive": "true",
-    "dynamicUncollapseDistance": "35"
+    "dynamicUncollapseDistance": "35",
+    "userAreaMaxHeight": "300",
+    "collapsedDistance": "0"
 }

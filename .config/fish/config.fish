@@ -6,6 +6,8 @@ function postexec_test --on-event fish_postexec
    echo
 end
 
+bind -k f5 add_date
+
 set -gx EDITOR nvim
 set -gx SHELL /usr/bin/fish
 set -U fish_greeting
@@ -15,6 +17,11 @@ set -U fish_greeting
 alias config='/usr/bin/git --git-dir=/home/wout/confico/ --work-tree=/home/wout/'
 
 # ALIAS
+
+alias ..='cd ..'
+alias rm='trash'
+
+alias yv='youtube-viewer'
 
 alias n='nvim'
 alias x='xlsclients'

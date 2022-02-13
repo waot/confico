@@ -1,11 +1,13 @@
 [global]
 #font = 53xy MF 18
-font = 95ix 22px 
+#font = 95ix 22px
+font = bnuq 24px
 #vertical_alignment = bottom
-padding = 0
+padding = 4 
+#0
 layer=top
 # 22 = 18, 33 = 27, 44 = 36
-
+	
 # Allow a small subset of html markup:
 #   <b>bold</b>
 #   <i>italic</i>
@@ -27,10 +29,14 @@ markup = yes
 #   %I  iconname (without its path)
 #   %p  progress value if set ([  0%] to [100%]) or nothing
 # Markup is allowed
-format = "%s\n%b\n%p"
+#format = "  %s\n  %b"
+format = " %s\n %b"
+
+
+#format = " %s \n %b \n %p " #1px space
 #format = " %s\n %b\n %p" for 53xy
 
-origin = top-right
+origin = top-center #top-right
 offset = 0x0
 
 # Sort messages by urgency.
@@ -134,12 +140,12 @@ separator_height = 0
 #padding = 0
 
 # Horizontal padding.
-horizontal_padding = 2
+horizontal_padding = -1#2
 #horizontal_padding = -2 53xy
 #padding = 2
 
 # text icon padding = 
-alignment = right #right
+alignment = center #right #right
 #alignment = left 53xy
 
 # Define a color for the separator.
@@ -253,6 +259,14 @@ appname=discord
 body=":*:"
 format=""
 
+[xkcd]
+appname=xkcd
+alignment=center
+frame_color = "#000000"
+foreground = "#808080"
+background = "#000000"
+timeout = 10
+
 #[discord]
 #appname=discord
 #summary="dabsch"
@@ -283,5 +297,5 @@ format=""
 #    appname = Pidgin
 #    summary = *twitter.com*
 #    urgency = normal
-#
+#a
 # vim: ft=cfg

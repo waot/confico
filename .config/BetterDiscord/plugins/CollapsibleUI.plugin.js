@@ -3,7 +3,7 @@
  * @author programmer2514
  * @authorId 563652755814875146
  * @description A simple plugin that allows collapsing various sections of the Discord UI.
- * @version 4.1.2
+ * @version 4.2.0
  * @website https://github.com/programmer2514/BetterDiscord-CollapsibleUI
  * @source https://raw.githubusercontent.com/programmer2514/BetterDiscord-CollapsibleUI/main/CollapsibleUI.plugin.js
  */
@@ -19,12 +19,27 @@ module.exports = (() => {
                 discord_id: '563652755814875146',
                 github_username: 'programmer2514'
             }],
-            version: '4.1.2',
+            version: '4.2.0',
             description: 'A simple plugin that allows collapsing various sections of the Discord UI.',
             github: 'https://github.com/programmer2514/BetterDiscord-CollapsibleUI',
             github_raw: 'https://raw.githubusercontent.com/programmer2514/BetterDiscord-CollapsibleUI/main/CollapsibleUI.plugin.js'
         },
         changelog: [{
+            title: '4.2.0',
+            items: [
+                'Added new advanced option to leave elements partially uncollapsed'
+            ]
+        }, {
+            title: '4.1.4',
+            items: [
+                'Fix collapsing call container hiding the toolbar'
+            ]
+        }, {
+            title: '4.1.3',
+            items: [
+                'Fix user area not fully uncollapsing while in a call'
+            ]
+        }, {
             title: '4.1.2',
             items: [
                 'Fix dynamic enabling of Horizontal Server List',
@@ -219,9 +234,10 @@ module.exports = (() => {
             let settingsButtonsMaxWidth = 100;
             let toolbarIconMaxWidth = 300;
             let membersListMaxWidth = 240;
-            let userAreaMaxHeight = 100;
+            let userAreaMaxHeight = 300;
             let msgBarMaxHeight = 400;
             let windowBarHeight = 18;
+            let collapsedDistance = 0;
 
             // Define mouse tracking variables
             this.mouseX = 0;
@@ -235,6 +251,8 @@ module.exports = (() => {
             this.classIconWrapper = 'iconWrapper-2awDjA';
             this.classClickable = 'clickable-ZD7xvu';
             this.classCallContainer = 'wrapper-1gVUIN';
+            this.classCallHeaderWrapper = 'headerWrapper-1ULEPv';
+            this.classCallUserWrapper = 'voiceCallWrapper-3UtDiC';
             this.classConnectionArea = 'connection-3k9QeF';
             this.classTooltipWrapper = 'layer-2aCOJ3';
             this.classTooltipWrapperDPE = 'disabledPointerEvents-2AmYRc';
@@ -321,6 +339,13 @@ module.exports = (() => {
 
                 // Set new settings version
                 BdApi.setData('CollapsibleUI', 'cuiSettingsVersion', '3');
+            }
+            if (parseInt(BdApi.getData('CollapsibleUI', 'cuiSettingsVersion')) < 4) {
+                // Clean up (v4)
+                BdApi.deleteData('CollapsibleUI', 'userAreaMaxHeight');
+
+                // Set new settings version
+                BdApi.setData('CollapsibleUI', 'cuiSettingsVersion', '4');
             }
 
             // disableTransitions [Default: false]
@@ -413,7 +438,7 @@ module.exports = (() => {
                 BdApi.setData('CollapsibleUI', 'membersListMaxWidth', membersListMaxWidth.toString());
             }
 
-            // userAreaMaxHeight [Default: 100]
+            // userAreaMaxHeight [Default: 300]
             if (typeof(BdApi.getData('CollapsibleUI', 'userAreaMaxHeight')) === 'string') {
                 userAreaMaxHeight = parseInt(BdApi.getData('CollapsibleUI', 'userAreaMaxHeight'));
             } else {
@@ -432,6 +457,13 @@ module.exports = (() => {
                 windowBarHeight = parseInt(BdApi.getData('CollapsibleUI', 'windowBarHeight'));
             } else {
                 BdApi.setData('CollapsibleUI', 'windowBarHeight', windowBarHeight.toString());
+            }
+
+            // collapsedDistance [Default: 0]
+            if (typeof(BdApi.getData('CollapsibleUI', 'collapsedDistance')) === 'string') {
+                collapsedDistance = parseInt(BdApi.getData('CollapsibleUI', 'collapsedDistance'));
+            } else {
+                BdApi.setData('CollapsibleUI', 'collapsedDistance', collapsedDistance.toString());
             }
 
 
@@ -470,9 +502,9 @@ module.exports = (() => {
                 toolbarContainer.classList.add('collapsible-ui-element');
                 toolbarContainer.style.alignItems = 'right';
                 toolbarContainer.style.display = 'flex';
-                toolbarContainer.style.padding = '0';
-                toolbarContainer.style.margin = '0';
-                toolbarContainer.style.border = '0';
+                toolbarContainer.style.padding = '0px';
+                toolbarContainer.style.margin = '0px';
+                toolbarContainer.style.border = '0px';
                 toolbarContainer.innerHTML = '<div id="cui-icon-insert-point" style="display: none;"></div>';
 
             // Insert icon to the left of the search bar
@@ -544,38 +576,38 @@ module.exports = (() => {
             if (!disableToolbarCollapse) {
                 if (cui.serverListButton) {
                     cui.serverListButton.style.maxWidth = '0px';
-                    cui.serverListButton.style.margin = '0';
-                    cui.serverListButton.style.padding = '0';
+                    cui.serverListButton.style.margin = '0px';
+                    cui.serverListButton.style.padding = '0px';
                 }
                 if (cui.channelListButton) {
                     cui.channelListButton.style.maxWidth = '0px';
-                    cui.channelListButton.style.margin = '0';
-                    cui.channelListButton.style.padding = '0';
+                    cui.channelListButton.style.margin = '0px';
+                    cui.channelListButton.style.padding = '0px';
                 }
                 if (cui.msgBarButton) {
                     cui.msgBarButton.style.maxWidth = '0px';
-                    cui.msgBarButton.style.margin = '0';
-                    cui.msgBarButton.style.padding = '0';
+                    cui.msgBarButton.style.margin = '0px';
+                    cui.msgBarButton.style.padding = '0px';
                 }
                 if (cui.windowBarButton) {
                     cui.windowBarButton.style.maxWidth = '0px';
-                    cui.windowBarButton.style.margin = '0';
-                    cui.windowBarButton.style.padding = '0';
+                    cui.windowBarButton.style.margin = '0px';
+                    cui.windowBarButton.style.padding = '0px';
                 }
                 if (cui.membersListButton) {
                     cui.membersListButton.style.maxWidth = '0px';
-                    cui.membersListButton.style.margin = '0';
-                    cui.membersListButton.style.padding = '0';
+                    cui.membersListButton.style.margin = '0px';
+                    cui.membersListButton.style.padding = '0px';
                 }
                 if (cui.userAreaButton) {
                     cui.userAreaButton.style.maxWidth = '0px';
-                    cui.userAreaButton.style.margin = '0';
-                    cui.userAreaButton.style.padding = '0';
+                    cui.userAreaButton.style.margin = '0px';
+                    cui.userAreaButton.style.padding = '0px';
                 }
                 if (cui.callContainerButton) {
                     cui.callContainerButton.style.maxWidth = '0px';
-                    cui.callContainerButton.style.margin = '0';
-                    cui.callContainerButton.style.padding = '0';
+                    cui.callContainerButton.style.margin = '0px';
+                    cui.callContainerButton.style.padding = '0px';
                 }
 
                 if (cui.membersListButton && (buttonsActive[4] == Math.max.apply(Math, buttonsActive))) {
@@ -644,6 +676,10 @@ module.exports = (() => {
                 if (this.msgBar) {
                     this.msgBar.style.maxHeight = msgBarMaxHeight + 'px';
                 }
+
+                if (this.callContainerExists) {
+                    document.querySelector('.' + this.classCallContainer).style.minHeight = '0px';
+                }
             }
 
             // Read stored user data to decide active state of Server List button
@@ -653,7 +689,7 @@ module.exports = (() => {
                     if (disableTransitions) {
                         this.serverList.style.display = 'none';
                     } else {
-                        this.serverList.style.width = '0px';
+                        this.serverList.style.width = collapsedDistance + 'px';
                     }
                     if (cui.isHSLLoaded) {
                         cui.windowBase.style.setProperty('top', '0px', 'important');
@@ -673,7 +709,7 @@ module.exports = (() => {
                     if (disableTransitions) {
                         this.channelList.style.display = 'none';
                     } else {
-                        this.channelList.style.width = '0px';
+                        this.channelList.style.width = collapsedDistance + 'px';
                     }
                 } else if (BdApi.getData('CollapsibleUI', 'cui.channelListButtonActive') === 'true') {
                     cui.channelListButton.classList.add(this.classSelected);
@@ -690,7 +726,7 @@ module.exports = (() => {
                     if (disableTransitions) {
                         this.msgBar.style.display = 'none';
                     } else {
-                        this.msgBar.style.maxHeight = '0px';
+                        this.msgBar.style.maxHeight = collapsedDistance + 'px';
                     }
                 } else if (BdApi.getData('CollapsibleUI', 'cui.msgBarButtonActive') === 'true') {
                     cui.msgBarButton.classList.add(this.classSelected);
@@ -708,8 +744,8 @@ module.exports = (() => {
                         this.windowBar.style.display = 'none';
                     } else {
                         this.windowBar.style.height = '0px';
-                        this.windowBar.style.padding = '0';
-                        this.windowBar.style.margin = '0';
+                        this.windowBar.style.padding = '0px';
+                        this.windowBar.style.margin = '0px';
                         this.wordMark.style.display = 'none';
                     }
                 } else if (BdApi.getData('CollapsibleUI', 'cui.windowBarButtonActive') === 'true') {
@@ -727,7 +763,7 @@ module.exports = (() => {
                     if (disableTransitions) {
                         this.membersList.style.display = 'none';
                     } else {
-                        this.membersList.style.maxWidth = '0px';
+                        this.membersList.style.maxWidth = collapsedDistance + 'px';
                         this.membersList.style.minWidth = '0px';
                     }
                 } else if (BdApi.getData('CollapsibleUI', 'cui.membersListButtonActive') === 'true') {
@@ -745,7 +781,7 @@ module.exports = (() => {
                     if (disableTransitions) {
                         this.userArea.style.display = 'none';
                     } else {
-                        this.userArea.style.maxHeight = '0px';
+                        this.userArea.style.maxHeight = collapsedDistance + 'px';
                     }
                 } else if (BdApi.getData('CollapsibleUI', 'cui.userAreaButtonActive') === 'true') {
                     cui.userAreaButton.classList.add(this.classSelected);
@@ -763,7 +799,8 @@ module.exports = (() => {
                         if (disableTransitions) {
                             document.querySelector('.' + this.classCallContainer).style.display = 'none';
                         } else {
-                            document.querySelector('.' + this.classCallContainer).style.height = '0px';
+                            document.querySelector('.' + this.classCallContainer).style.height = document.querySelector('.' + this.classCallHeaderWrapper).getBoundingClientRect().height + 'px';
+                            document.querySelector('.' + this.classCallUserWrapper).style.display = 'none';
                         }
                     }
                 } else if (BdApi.getData('CollapsibleUI', 'cui.callContainerButtonActive') === 'true') {
@@ -843,7 +880,7 @@ module.exports = (() => {
                             }
                             cui.isCollapsed[0] = false;
                         } else if (!(cui.isCollapsed[0]) && !(cui.isNear(cui.serverList, dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
-                            cui.serverList.style.width = '0px';
+                            cui.serverList.style.width = collapsedDistance + 'px';
                             if (cui.isHSLLoaded) {
                                 cui.windowBase.style.setProperty('top', '0px', 'important');
                             }
@@ -858,7 +895,7 @@ module.exports = (() => {
                             cui.isCollapsed[1] = false;
                         }
                         if (!(cui.isCollapsed[1]) && !(cui.isNear(cui.channelList, dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
-                            cui.channelList.style.width = '0px';
+                            cui.channelList.style.width = collapsedDistance + 'px';
                             cui.isCollapsed[1] = true;
                         }
                     }
@@ -870,7 +907,7 @@ module.exports = (() => {
                             cui.isCollapsed[2] = false;
                         }
                         if (!(cui.isCollapsed[2]) && !(cui.isNear(cui.msgBar, dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
-                            cui.msgBar.style.maxHeight = '0px';
+                            cui.msgBar.style.maxHeight = collapsedDistance + 'px';
                             cui.isCollapsed[2] = true;
                         }
                     }
@@ -886,8 +923,8 @@ module.exports = (() => {
                         }
                         if (!(cui.isCollapsed[3]) && !(cui.isNear(cui.windowBar, dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
                             cui.windowBar.style.height = '0px';
-                            cui.windowBar.style.padding = '0';
-                            cui.windowBar.style.margin = '0';
+                            cui.windowBar.style.padding = '0px';
+                            cui.windowBar.style.margin = '0px';
                             cui.wordMark.style.display = 'none';
                             cui.isCollapsed[3] = true;
                         }
@@ -901,7 +938,7 @@ module.exports = (() => {
                             cui.isCollapsed[4] = false;
                         }
                         if (!(cui.isCollapsed[4]) && !(cui.isNear(cui.membersList, dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
-                            cui.membersList.style.maxWidth = '0px';
+                            cui.membersList.style.maxWidth = collapsedDistance + 'px';
                             cui.membersList.style.minWidth = '0px';
                             cui.isCollapsed[4] = true;
                         }
@@ -914,7 +951,7 @@ module.exports = (() => {
                             cui.isCollapsed[5] = false;
                         }
                         if (!(cui.isCollapsed[5]) && !(cui.isNear(cui.userArea, dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
-                            cui.userArea.style.maxHeight = '0px';
+                            cui.userArea.style.maxHeight = collapsedDistance + 'px';
                             cui.isCollapsed[5] = true;
                         }
                     }
@@ -923,10 +960,14 @@ module.exports = (() => {
                     if ((BdApi.getData('CollapsibleUI', 'cui.callContainerButtonActive') === 'false') && document.querySelector('.' + cui.classCallContainer)) {
                         if (cui.isCollapsed[6] && cui.isNear(document.querySelector('.' + cui.classCallContainer), dynamicUncollapseDistance, cui.mouseX, cui.mouseY)) {
                             document.querySelector('.' + cui.classCallContainer).style.removeProperty('height');
+                            document.querySelector('.' + cui.classCallUserWrapper).style.removeProperty('display');
                             cui.isCollapsed[6] = false;
                         }
                         if (!(cui.isCollapsed[6]) && !(cui.isNear(document.querySelector('.' + cui.classCallContainer), dynamicUncollapseDistance, cui.mouseX, cui.mouseY))) {
-                            document.querySelector('.' + cui.classCallContainer).style.height = '0px';
+                            if (document.querySelector('.' + cui.classCallHeaderWrapper))
+                                document.querySelector('.' + cui.classCallContainer).style.height = document.querySelector('.' + cui.classCallHeaderWrapper).getBoundingClientRect().height + 'px';
+                            if (document.querySelector('.' + cui.classCallUserWrapper))
+                                document.querySelector('.' + cui.classCallUserWrapper).style.display = 'none';
                             cui.isCollapsed[6] = true;
                         }
                     }
@@ -935,48 +976,48 @@ module.exports = (() => {
                     // Server List
                     if ((BdApi.getData('CollapsibleUI', 'cui.serverListButtonActive') === 'false') && cui.serverListButton) {
                         if (!cui.isHSLLoaded) {
-                            cui.serverList.style.width = '0px';
+                            cui.serverList.style.width = collapsedDistance + 'px';
                             cui.isCollapsed[0] = true;
                         }
                     }
 
                     // Channel List
                     if ((BdApi.getData('CollapsibleUI', 'cui.channelListButtonActive') === 'false') && cui.channelListButton) {
-                        cui.channelList.style.width = '0px';
+                        cui.channelList.style.width = collapsedDistance + 'px';
                         cui.isCollapsed[1] = true;
                     }
 
                     // Message Bar
                     if ((BdApi.getData('CollapsibleUI', 'cui.msgBarButtonActive') === 'false') && cui.msgBarButton) {
-                        cui.msgBar.style.maxHeight = '0px';
+                        cui.msgBar.style.maxHeight = collapsedDistance + 'px';
                         cui.isCollapsed[2] = true;
                     }
 
                     // Window Bar
                     if ((BdApi.getData('CollapsibleUI', 'cui.windowBarButtonActive') === 'false') && cui.windowBarButton && (cui.mouseY > windowBarHeight + dynamicUncollapseDistance)) {
                         cui.windowBar.style.height = '0px';
-                        cui.windowBar.style.padding = '0';
-                        cui.windowBar.style.margin = '0';
+                        cui.windowBar.style.padding = '0px';
+                        cui.windowBar.style.margin = '0px';
                         cui.wordMark.style.display = 'none';
                         cui.isCollapsed[3] = true;
                     }
 
                     // Members List
                     if ((BdApi.getData('CollapsibleUI', 'cui.membersListButtonActive') === 'false') && cui.membersListButton) {
-                        cui.membersList.style.maxWidth = '0px';
+                        cui.membersList.style.maxWidth = collapsedDistance + 'px';
                         cui.membersList.style.minWidth = '0px';
                         cui.isCollapsed[4] = true;
                     }
 
                     // User Area
                     if ((BdApi.getData('CollapsibleUI', 'cui.userAreaButtonActive') === 'false') && cui.userAreaButton) {
-                        cui.userArea.style.maxHeight = '0px';
+                        cui.userArea.style.maxHeight = collapsedDistance + 'px';
                         cui.isCollapsed[5] = true;
                     }
 
                     // Call Container
                     if ((BdApi.getData('CollapsibleUI', 'cui.callContainerButtonActive') === 'false') && document.querySelector('.' + cui.classCallContainer)) {
-                        document.querySelector('.' + cui.classCallContainer).style.height = '0px';
+                        document.querySelector('.' + cui.classCallContainer).style.height = document.querySelector('.' + cui.classCallHeaderWrapper).getBoundingClientRect().height + 'px';
                         cui.isCollapsed[6] = true;
                     }
                 }, {signal: cui.eventListenerSignal});
@@ -1024,38 +1065,38 @@ module.exports = (() => {
                 toolbarContainer.addEventListener('mouseleave', function(){
                     if (cui.serverListButton) {
                         cui.serverListButton.style.maxWidth = '0px';
-                        cui.serverListButton.style.margin = '0';
-                        cui.serverListButton.style.padding = '0';
+                        cui.serverListButton.style.margin = '0px';
+                        cui.serverListButton.style.padding = '0px';
                     }
                     if (cui.channelListButton) {
                         cui.channelListButton.style.maxWidth = '0px';
-                        cui.channelListButton.style.margin = '0';
-                        cui.channelListButton.style.padding = '0';
+                        cui.channelListButton.style.margin = '0px';
+                        cui.channelListButton.style.padding = '0px';
                     }
                     if (cui.msgBarButton) {
                         cui.msgBarButton.style.maxWidth = '0px';
-                        cui.msgBarButton.style.margin = '0';
-                        cui.msgBarButton.style.padding = '0';
+                        cui.msgBarButton.style.margin = '0px';
+                        cui.msgBarButton.style.padding = '0px';
                     }
                     if (cui.windowBarButton) {
                         cui.windowBarButton.style.maxWidth = '0px';
-                        cui.windowBarButton.style.margin = '0';
-                        cui.windowBarButton.style.padding = '0';
+                        cui.windowBarButton.style.margin = '0px';
+                        cui.windowBarButton.style.padding = '0px';
                     }
                     if (cui.membersListButton) {
                         cui.membersListButton.style.maxWidth = '0px';
-                        cui.membersListButton.style.margin = '0';
-                        cui.membersListButton.style.padding = '0';
+                        cui.membersListButton.style.margin = '0px';
+                        cui.membersListButton.style.padding = '0px';
                     }
                     if (cui.userAreaButton) {
                         cui.userAreaButton.style.maxWidth = '0px';
-                        cui.userAreaButton.style.margin = '0';
-                        cui.userAreaButton.style.padding = '0';
+                        cui.userAreaButton.style.margin = '0px';
+                        cui.userAreaButton.style.padding = '0px';
                     }
                     if (cui.callContainerButton) {
                         cui.callContainerButton.style.maxWidth = '0px';
-                        cui.callContainerButton.style.margin = '0';
-                        cui.callContainerButton.style.padding = '0';
+                        cui.callContainerButton.style.margin = '0px';
+                        cui.callContainerButton.style.padding = '0px';
                     }
 
                     if (cui.membersListButton && (buttonsActive[4] == Math.max.apply(Math, buttonsActive))) {
@@ -1113,7 +1154,7 @@ module.exports = (() => {
                         if (disableTransitions) {
                             cui.serverList.style.display = 'none';
                         } else {
-                            cui.serverList.style.width = '0px';
+                            cui.serverList.style.width = collapsedDistance + 'px';
                         }
                         if (cui.isHSLLoaded) {
                             cui.windowBase.style.setProperty('top', '0px', 'important');
@@ -1150,7 +1191,7 @@ module.exports = (() => {
                         if (disableTransitions) {
                             cui.channelList.style.display = 'none';
                         } else {
-                            cui.channelList.style.width = '0px';
+                            cui.channelList.style.width = collapsedDistance + 'px';
                         }
                         BdApi.setData('CollapsibleUI', 'cui.channelListButtonActive', 'false');
                         this.classList.remove(cui.classSelected);
@@ -1181,7 +1222,7 @@ module.exports = (() => {
                         if (disableTransitions) {
                             cui.msgBar.style.display = 'none';
                         } else {
-                            cui.msgBar.style.maxHeight = '0px';
+                            cui.msgBar.style.maxHeight = collapsedDistance + 'px';
                         }
                         BdApi.setData('CollapsibleUI', 'cui.msgBarButtonActive', 'false');
                         this.classList.remove(cui.classSelected);
@@ -1213,8 +1254,8 @@ module.exports = (() => {
                             cui.windowBar.style.display = 'none';
                         } else {
                             cui.windowBar.style.height = '0px';
-                            cui.windowBar.style.padding = '0';
-                            cui.windowBar.style.margin = '0';
+                            cui.windowBar.style.padding = '0px';
+                            cui.windowBar.style.margin = '0px';
                             cui.wordMark.style.display = 'none';
                         }
                         BdApi.setData('CollapsibleUI', 'cui.windowBarButtonActive', 'false');
@@ -1249,7 +1290,7 @@ module.exports = (() => {
                         if (disableTransitions) {
                             cui.membersList.style.display = 'none';
                         } else {
-                            cui.membersList.style.maxWidth = '0px';
+                            cui.membersList.style.maxWidth = collapsedDistance + 'px';
                             cui.membersList.style.minWidth = '0px';
                         }
                         BdApi.setData('CollapsibleUI', 'cui.membersListButtonActive', 'false');
@@ -1282,7 +1323,7 @@ module.exports = (() => {
                         if (disableTransitions) {
                             cui.userArea.style.display = 'none';
                         } else {
-                            cui.userArea.style.maxHeight = '0px';
+                            cui.userArea.style.maxHeight = collapsedDistance + 'px';
                         }
                         BdApi.setData('CollapsibleUI', 'cui.userAreaButtonActive', 'false');
                         this.classList.remove(cui.classSelected);
@@ -1314,7 +1355,8 @@ module.exports = (() => {
                             if (disableTransitions) {
                                 document.querySelector('.' + cui.classCallContainer).style.display = 'none';
                             } else {
-                                document.querySelector('.' + cui.classCallContainer).style.height = '0px';
+                                document.querySelector('.' + cui.classCallContainer).style.height = document.querySelector('.' + cui.classCallHeaderWrapper).getBoundingClientRect().height + 'px';
+                                document.querySelector('.' + cui.classCallUserWrapper).style.display = 'none';
                             }
                         }
                         BdApi.setData('CollapsibleUI', 'cui.callContainerButtonActive', 'false');
@@ -1325,6 +1367,7 @@ module.exports = (() => {
                                 document.querySelector('.' + cui.classCallContainer).style.removeProperty('display');
                             } else {
                                 document.querySelector('.' + cui.classCallContainer).style.removeProperty('height');
+                                document.querySelector('.' + cui.classCallUserWrapper).style.removeProperty('display');
                             }
                         }
                         BdApi.setData('CollapsibleUI', 'cui.callContainerButtonActive', 'true');
@@ -1401,6 +1444,7 @@ module.exports = (() => {
                 document.querySelector('.' + this.classCallContainer).style.removeProperty('height');
                 document.querySelector('.' + this.classCallContainer).style.removeProperty('transition');
                 document.querySelector('.' + this.classCallContainer).style.removeProperty('display');
+                document.querySelector('.' + this.classCallUserWrapper).style.removeProperty('display');
             }
             if (this.windowBase) {
                 this.windowBase.style.removeProperty('top');
@@ -1427,7 +1471,7 @@ module.exports = (() => {
             await new Promise(resolve => setTimeout(resolve, 1000))
 
             // Send startup message
-            console.log('%c[CollapsibleUI] ' + '%c(v4.1.2) ' + '%chas started.', 'color: #3a71c1; font-weight: 700;', 'color: #666; font-weight: 600;', '');
+            console.log('%c[CollapsibleUI] ' + '%c(v4.2.0) ' + '%chas started.', 'color: #3a71c1; font-weight: 700;', 'color: #666; font-weight: 600;', '');
 
             try {
                 this.initialize();
@@ -1442,7 +1486,7 @@ module.exports = (() => {
             this.terminate();
 
             // Send shutdown message
-            console.log('%c[CollapsibleUI] ' + '%c(v4.1.2) ' + '%chas stopped.', 'color: #3a71c1; font-weight: 700;', 'color: #666; font-weight: 600;', '');
+            console.log('%c[CollapsibleUI] ' + '%c(v4.2.0) ' + '%chas stopped.', 'color: #3a71c1; font-weight: 700;', 'color: #666; font-weight: 600;', '');
         }
 
         // Re-initialize the plugin on channel/server switch to maintain icon availability
@@ -1587,7 +1631,7 @@ module.exports = (() => {
                                                            null,
                                                            BdApi.getData('CollapsibleUI', 'userAreaMaxHeight'),
                                                            null,
-                                                           {placeholder: 'Default: 100'});
+                                                           {placeholder: 'Default: 300'});
             var settingMsgBarMaxHeight = new zps.Textbox('Message Bar - Max Height',
                                                          null,
                                                          BdApi.getData('CollapsibleUI', 'msgBarMaxHeight'),
@@ -1598,6 +1642,11 @@ module.exports = (() => {
                                                          BdApi.getData('CollapsibleUI', 'windowBarHeight'),
                                                          null,
                                                          {placeholder: 'Default: 18'});
+            var settingCollapsedDistance = new zps.Textbox('Collapsed Element Distance',
+                                                         null,
+                                                         BdApi.getData('CollapsibleUI', 'collapsedDistance'),
+                                                         null,
+                                                         {placeholder: 'Default: 0'});
 
             // Append advanced settings to Advanced subgroup
             groupAdvanced.append(settingSettingsButtonsMaxWidth);
@@ -1606,6 +1655,7 @@ module.exports = (() => {
             groupAdvanced.append(settingUserAreaMaxHeight);
             groupAdvanced.append(settingMsgBarMaxHeight);
             groupAdvanced.append(settingWindowBarHeight);
+            groupAdvanced.append(settingCollapsedDistance);
 
             // Append subgroups to root node
             settingsRoot.append(groupMain);
@@ -1724,6 +1774,10 @@ module.exports = (() => {
             };
             settingWindowBarHeight.onChange = function(result) {
                 BdApi.setData('CollapsibleUI', 'windowBarHeight', result);
+                BdApi.Plugins.get('CollapsibleUI').instance.initialize();
+            };
+            settingCollapsedDistance.onChange = function(result) {
+                BdApi.setData('CollapsibleUI', 'collapsedDistance', result);
                 BdApi.Plugins.get('CollapsibleUI').instance.initialize();
             };
 
