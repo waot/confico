@@ -87,14 +87,14 @@
     "modules-center": [
 	"custom/wf-recorder",
 	"custom/wind",
-	"sway/mode"
+	"sway/mode",
 //	"custom/dabsch",
 
 //	"sway/workspaces#icons",
 //	"battery"
-        ],
+//        ],
 	//"sway/window"],
-        // "idle_inhibitor"],
+         "idle_inhibitor"],
     "custom/weather": {"exec": "/usr/share/sway/scripts/weather.py Hazerswoude-Dorp", "format": "{icon}  {}  "},
 
 

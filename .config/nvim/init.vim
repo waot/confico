@@ -1,3 +1,5 @@
+startinsert
+
 set nocompatible              " be iMproved, required
 set title
 set noruler
@@ -11,11 +13,8 @@ augroup cmdline
     autocmd CmdlineLeave : echo ''
 augroup end
 
-"let g:lightline = {'colorscheme':'simpleblack'}
 
-set statusline=\ \ 
-"set statusline+=%f
-set statusline+=%{&modified?'+':''}
+"let g:lightline = {'colorscheme':'simpleblack'}
 
 let g:currentmode={
        \ 'n'  : '',
@@ -28,14 +27,27 @@ let g:currentmode={
        \ 'c'  : '',
        \}
 
+
+set statusline=\ \ 
+"set statusline+=%f
+set statusline+=%{&modified?'+':''}
 set statusline+=\ %{(g:currentmode[mode()])}
+set statusline+=%=
+"set statusline+=%c\  "callable"
+set statusline+=%f
+set statusline+=\ 
+
+
+
 
 nnoremap <F5> "=strftime('%Y-%m-%d')<CR>P
 inoremap <F5> <C-R>=strftime('%Y-%m-%d')<CR>
 
 nnoremap <F11> :Goyo<CR>i
-inoremap <F11> <Esc>:Goyo<CR>
+inoremap <F11> <Esc>:Goyo<CR>i
 
+nnoremap <F2> :set nu!<CR>:set rnu!<CR>
+inoremap <F2> <Esc>:set nu!<CR>:set rnu!<CR>
 
 "filetype off                  " required
 
@@ -53,6 +65,7 @@ call plug#begin()
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'liuchengxu/vim-which-key'
+
 "Plug 'ratfactor/vviki'
 "Plug 'nvim-lualine/lualine.nvim'
 "Plug 'itchyny/lightline.vim'
@@ -73,6 +86,8 @@ Plug 'ful1e5/onedark.nvim'
 "Plug 'bdd/noclown.vim'
 
 call plug#end()
+
+let g:python_highlight_all = 1
 
 "lua << END
 "require('lualine').setup {

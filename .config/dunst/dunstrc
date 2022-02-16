@@ -36,7 +36,7 @@ format = " %s\n %b"
 #format = " %s \n %b \n %p " #1px space
 #format = " %s\n %b\n %p" for 53xy
 
-origin = top-center #top-right
+origin = bottom-center #top-right
 offset = 0x0
 
 # Sort messages by urgency.

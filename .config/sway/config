@@ -1,3 +1,4 @@
+
 # Default config for sway
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
@@ -36,6 +37,7 @@ include $HOME/.config/sway/config.d/*.conf
 seat * hide_cursor 1920
 seat * hide_cursor when-typing enable
 
+
 #seat seat0 xcursor_theme Hacked-aio-rightly 30
 #seat seat0 xcursor_theme Bibata_Spirit 40
 seat * xcursor_theme Bibata_Spirit 40
@@ -54,7 +56,14 @@ $bindsym --no-repeat $mod+return exec $term_cwd
 #$bindsym XF86AudioRaiseVolume --locked exec $volume_up
 #$bindsym XF86AudioLowerVolume --locked exec $volume_down
 
+# Push workspace to other monitor
 $bindsym XF86Display move workspace to up
+$bindsym XF86Display+shift exec swaymsg workspace 0 && wl-mirror --no-show-cursor eDP-1 && output eDP-1 position 0,1090
+# Gap of 10 between 1080 and 1090
+# This would restrict it all input * map_to_output eDP-1
+# Mirror workspace on second monitor
+
+# Another mirror command: wl-mirror --no-show-cursor -r '0,0 960x1080' eDP-1, splits screen in half.
 
 #$bindsym ctrl+Up move workspace to up
 #$bindsym ctrl+Down move workspace to down
@@ -75,7 +84,7 @@ set $onscreen_bar bash /usr/share/sway/scripts/wob.sh "#808080FF" "#000000FF"
 #bindsym $mod+space exec i3-focus-last menu
 exec swayrd
 
-focus_on_window_activation focus
+#focus_on_window_activation focus Not sure what it does
 
 bindsym $mod+ctrl+l exec $(./empty.sh)
 
@@ -162,9 +171,10 @@ for_window [class="discord"] inhibit_idle fullscreen
 #for_window [app_id="pamac-manager"] move to workspace $ws10, workspace $ws10
 
 exec_always /home/wout/Pictures/XKCD/xkcd.sh
-bindsym $mod+k exec /home/wout/Pictures/XKCD/xkcd.sh
+#bindsym $mod+k 
+exec /home/wout/Pictures/XKCD/xkcd.sh
 output * bg /home/wout/Pictures/XKCD/output.png center #000000
-bindsym $mod+shift+k exec notify-send "$(curl -s https://xkcd.com/info.0.json | jq -r .alt)"
+bindsym $mod+k exec notify-send "$(curl -s https://xkcd.com/info.0.json | jq -r .alt)"
 #center #000000 can also be replaced by fill
 
 #set $menu rofi -show drun -show-icons
@@ -181,9 +191,8 @@ bindsym --whole-window --input-device=2:1:PS/2_Generic_Mouse BTN_RIGHT exec sudo
 #bindsym --whole-window --input-device=2:1:PS/2_Generic_Mouse BTN_RIGHT exec 'wtype -M ctrl KEY_W -m ctrl'
 bindsym --whole-window --input-device=2:1:PS/2_Generic_Mouse BTN_LEFT workspace back_and_forth
 
-
-workspace_auto_back_and_forth yes
-bindsym --locked Break exec swaymsg workspace "11111: " && $(pactl set-source-mute @DEFAULT_SOURCE@ toggle) && pactl set-sink-mute @DEFAULT_SINK@ toggle
+# workspace_auto_back_and_forth yes # Makes double entries   "11111: " instead of back_and_forth
+bindsym --locked Break exec swaymsg workspace back_and_forth && $(pactl set-source-mute @DEFAULT_SOURCE@ toggle) && pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 #Add a line of $volume_mute and $mic_mute
 
@@ -256,7 +265,11 @@ exec dunst
 
 #chromecast
 exec cast_control service connect -n 'Groomkast'
+bindsym shift+XF86AudioLowerVolume exec playerctl volume 0.05- && $onscreen_bar $(playerctl volume | tr -d '.' | cut -c -3)
+bindsym shift+XF86AudioRaiseVolume exec playerctl volume 0.05+ && $onscreen_bar $(playerctl volume | tr -d '.' | cut -c -3)
 
+#bindsym shift+XF86AudioLowerVolume exec fish playerctl volume 0.05- && fish /usr/share/sway/scripts/wob.sh "#808080FF" "#000000FF" (math (playerctl volume) x 100)
+#bindsym shift+XF86AudioRaiseVolume exec playerctl volume 0.05+ && fish /usr/share/sway/scripts/wob.sh "#808080FF" "#000000FF" (math (playerctl volume) x 100)
 
 exec_always poweralertd -s -i "line power"
 
